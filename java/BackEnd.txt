@@ -1,0 +1,84 @@
+ Design for Back End---
+
+1. DATABASE
+ - Comment Table( picture_id, user_id, message/comment)
+ - Favorite Table(picture_id, user_id,)
+ - Picture Table(picture_id, size, link, format)
+
+We can use img_url to get the picture!
+
+2. CONTROLLER PACKAGE
+-Add Picture Controller---@CrossOrigin(Do not forget)
+-CRUD OPERATIONS(Get, Put, Post, Delete)
+-API end Points
+Path ---
+ --To get a list of pictures - "/pictures",
+ --To get a specific picture - "/picture/{id}",
+ --To get a picture by a specific user_id - "/user/{id}",
+ --To post a comment- "/picture/{id}/comments",
+ --To get favorites- "/favorites",
+ "/user/{id}/favorites",
+To remove a picture  - "/removefavorite/{id}",
+To add favourite  -"/addfavorite/{id}"
+
+
+
+
+3. DAO PACKAGE
+Interfaces:
+-CommentDAO
+-FavoriteDAO
+-PictureDAO
+
+JDBC Classes:
+-JdbcCommentDAO
+-JdbcFavoriteDAO
+-JdbcPictureDAO
+
+
+
+4. EXCEPTION PACKAGE
+-User Already Exists Exception
+-For all exceptions
+
+5. SERVICE PACKAGE
+
+6. MODEL PACKAGE
+-Comment class
+-Picture class
+-Favorite Class
+
+/Post Model data structure:
+post: {
+int post_id
+int user_id
+String image_url
+date_time
+String/varchar caption
+int like_count (COUNT query on like table by user_id)
+int dislike_count (COUNT query on dislike table by user_id) //this is where post visiblity is managed by dislikes)
+int vibe_count (COUNT query on Favorites table by post_id=>user_id)
+comment[] : {
+    int comment_id
+    username (pulled by user_id in comment table)
+    date_time
+    text
+}
+//User Model data structure:
+user: {
+    int user_id
+    user_posts[]: {
+        post_id (queried by user_id, used to pull post data for Post Model))
+    }
+    followers[]: {
+        user_id
+    }
+    vibes[]: {
+        post_id (queried by this user_id)
+    }
+    profile_img_url
+    description //should we change this to prof_desc or something descriptive?
+    role (if we're doing any administrative behaviors client-side)
+}
+
+
